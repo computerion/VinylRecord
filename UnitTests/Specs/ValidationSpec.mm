@@ -70,15 +70,6 @@ describe(@"Uniqueness", ^{
         result = [peter save];
         result should be_truthy;
     });
-    it(@"Should update fetched User", ^{
-        User *john = [User record];
-        john.name = @"John";
-        BOOL result = [john save];
-        result should be_truthy;
-        User *user = [[[[User query] limit:1] fetchRecords] objectAtIndex:0];
-        user.updatedAt = [NSDate dateWithTimeIntervalSinceNow:0];
-        user.save should be_truthy;
-    });
 });
 
 describe(@"Custom validator", ^{

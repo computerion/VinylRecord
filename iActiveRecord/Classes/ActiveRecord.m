@@ -41,8 +41,6 @@ static NSMutableDictionary *recordTableName = nil;
 
 @implementation ActiveRecord
 @dynamic id;
-@dynamic createdAt;
-@dynamic updatedAt;
 
 #pragma mark - Initialize
 
@@ -222,7 +220,6 @@ static NSString *registerHasManyThrough = @"_ar_registerHasManyThrough";
 - (instancetype)init {
     self = [super init];
     if (self) {
-     //   self.createdAt = self.updatedAt = [NSDate dateWithTimeIntervalSinceNow:0];
         self.entityCache = [NSMutableDictionary dictionary];
         self.changedColumns = [NSMutableSet setWithCapacity: 1];
         self.deserializedCache = [NSMutableDictionary dictionary];
@@ -238,8 +235,6 @@ static NSString *registerHasManyThrough = @"_ar_registerHasManyThrough";
     }
 
     self.id = nil;
-    self.updatedAt = nil;
-    self.createdAt = nil;
     self.entityCache = nil;
     self.deserializedCache = nil;
 }

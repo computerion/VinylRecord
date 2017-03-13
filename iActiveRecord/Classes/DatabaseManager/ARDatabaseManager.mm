@@ -576,19 +576,11 @@ static NSArray *records = nil;
 }
 
 - (NSInteger)saveRecord:(ActiveRecord *)aRecord {
-    NSDate *originalUpdatedAt = aRecord.updatedAt;
-    NSDate *originalCreatedAt = aRecord.createdAt;
     NSSet *changedColumns = [aRecord changedColumns];
     NSInteger columnsCount = changedColumns.count;
     __block int result = 0;
 
     if(columnsCount) { //TODO: refactor
-        if(!originalUpdatedAt)
-            aRecord.updatedAt = [NSDate dateWithTimeIntervalSinceNow:0];
-
-        if(!aRecord.createdAt)
-            aRecord.createdAt = [NSDate dateWithTimeIntervalSinceNow:0];
-
         changedColumns = [NSSet setWithSet: [aRecord changedColumns]];
         columnsCount = changedColumns.count;
     }
@@ -667,23 +659,15 @@ static NSArray *records = nil;
 
     });
 
-    if(result == 0) {
-        aRecord.createdAt = originalCreatedAt;
-        aRecord.updatedAt = originalUpdatedAt;
-    }
-
     return result;
 }
 
 
 - (NSInteger)updateRecord:(ActiveRecord *)aRecord {
-    NSDate *originalUpdatedAt = aRecord.updatedAt;
-    NSDate *originalCreatedAt = aRecord.createdAt;
     NSSet *changedColumns = [aRecord changedColumns];
     NSInteger columnsCount = changedColumns.count;
 
     if(columnsCount) {
-        aRecord.updatedAt = [NSDate dateWithTimeIntervalSinceNow:0];
         changedColumns = [NSSet setWithSet: [aRecord changedColumns]];
         columnsCount = changedColumns.count;
     }
@@ -754,15 +738,10 @@ static NSArray *records = nil;
 
     });
 
-    if(result != SQLITE_OK) {
-        aRecord.updatedAt = originalUpdatedAt;
-    }
-
     return result != SQLITE_OK ? 0 : 1;
 }
 
 - (NSInteger)updateSQLRecord:(ActiveRecord *)aRecord {   //TODO: Depricate this, prepared statement used instead.
-    aRecord.updatedAt = [NSDate dateWithTimeIntervalSinceNow:0];
     const char *sqlQuery = [ARSQLBuilder sqlOnUpdateRecord:aRecord];
     if (!sqlQuery) {
         return 0;

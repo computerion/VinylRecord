@@ -80,15 +80,6 @@ describe(@"Uniqueness", ^{
         result = [peter save];
         expect(result).to.beTruthy();
     });
-    it(@"Should update fetched User", ^{
-        User *john = [User record];
-        john.name = @"John";
-        BOOL result = [john save];
-        expect(result).to.beTruthy();
-        User *user = [[[[User query] limit:1] fetchRecords] objectAtIndex:0];
-        user.updatedAt = [NSDate dateWithTimeIntervalSinceNow:0];
-        expect(result).to.beTruthy();;
-    });
 });
 
 describe(@"Custom validator", ^{

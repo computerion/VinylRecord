@@ -117,28 +117,6 @@ Tsuga<ARLazyFetcher>::run(^{
         });
         
         describe(@"New Where syntax", ^{
-           describe(@"where between", ^{
-                it(@"should fetch only records between two dates", ^{
-                    [ActiveRecord clearDatabase];
-                    NSDate *startDate = [NSDate dateWithTimeIntervalSinceNow:-MONTH];
-                    NSDate *endDate = [NSDate dateWithTimeIntervalSinceNow:DAY];
-                    User *john = [User record];
-                    john.name = @"John";
-                    john.createdAt = [NSDate dateWithTimeIntervalSinceNow:-MONTH * 2];
-                    [john save] should equal(YES);
-                    User *alex = [User record];
-                    alex.name = @"Alex";
-                    alex.createdAt = [NSDate dateWithTimeIntervalSinceNow:-DAY];
-                    [alex save] should equal(YES);
-                    ARLazyFetcher *fetcher = [User query];
-                    [fetcher where:
-                     @"createdAt BETWEEN %@ AND %@", 
-                     startDate, 
-                     endDate, nil];
-                    NSArray *users = [fetcher fetchRecords];
-                    users.count should equal(1);
-                });
-            }); 
             describe(@"Simple where conditions", ^{
                 it(@"whereField equalToValue should find record", ^{
                     NSString *username = @"john";
