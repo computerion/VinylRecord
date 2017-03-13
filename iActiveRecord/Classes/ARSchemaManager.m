@@ -52,7 +52,7 @@
                 NSLog(@"found mapping for property %@",propertyName);
             }
             ARColumn *column = [[ARColumn alloc] initWithProperty:properties[i] mapping: columnMapping ofClass:aRecordClass];
-            if (!column.isDynamic) {
+            if (!column.isDynamic || [propertyName isEqualToString:@"id"]) {
                 continue;
             }
             [self.schemes addValue:column toArrayNamed:recordName];
