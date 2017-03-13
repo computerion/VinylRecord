@@ -218,7 +218,7 @@
     - (void) setInt_##property_name: (NSInteger ) value  { \
         NSString *propertyName =  @"" #property_name ; \
         NSString *propertySetter =  [propertyName asSetterMethodName] ; \
-        ((void(*)(id, SEL, id))objc_msgSend)(self,sel_getUid([propertySetter UTF8String]), [NSNumber numberWithInt: value ]) ; \
+        ((void(*)(id, SEL, id))objc_msgSend)(self,sel_getUid([propertySetter UTF8String]), [NSNumber numberWithLong: value ]) ; \
     }
 
 
